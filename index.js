@@ -52,6 +52,7 @@ app.put("/updateProduct", productController.updateProduct)
 app.post("/signUp", userController.create)
 app.post("/login", userController.authenticate)
 app.get("/logout", userController.logout)
+app.get("/isLogged", userController.isLogged)
 
 //Order
 app.post("/createOrder", orderController.createOrder)

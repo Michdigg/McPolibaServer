@@ -4,7 +4,7 @@ const passport = require("passport");
 
 module.exports = {
     create: (req, res, next) => {
-        const newUser = new User ({username: req.body.username});
+        const newUser = new User ({username: req.body.username, type: req.body.type});
         User.register (newUser, req.body.password, (error, user) => {
             if (user) next ();
             else console.log(error)
@@ -23,5 +23,12 @@ module.exports = {
             if (err) { return next(err); }
             res.redirect('/');
         });
+    },
+
+    isLogged: (req, res, next) => {
+        res.send({
+            isLogged: req.isAuthenticated(),
+            user: req.user
+        })
     }
 }

@@ -4,7 +4,8 @@ const orderSchema = mongoose.Schema({
     products: [{
         _id : String,
         name: String,
-        price: Number
+        price: Number,
+        amount: Number,
     }],
     amount: Number,
     status: String // pending || accepted || completed
