@@ -27,6 +27,15 @@ app.use(expressSession({ secret: 'super secret' , resave: true, saveUninitialize
 app.use(passport.initialize());
 app.use(passport.session());
 
+const cors=require("cors");
+const corsOptions ={
+    origin:'*',
+    credentials:true,
+    optionSuccessStatus:200,
+}
+
+app.use(cors(corsOptions))
+
 app.set("view engine", "ejs");
 
 passport.use(new LocalStrategy(User.authenticate()));
@@ -48,6 +57,6 @@ app.get("/logout", userController.logout)
 app.post("/createOrder", orderController.createOrder)
 app.post("/acceptOrder", orderController.acceptOrder)
 app.post("/completeOrder", orderController.completeOrder)
-app.get("/activeOrders", orderController.getActiveOrders)
+app.get("/orders", orderController.getActiveOrders)
 
 app.listen(port, () => console.log("Applicazione in ascolto"));

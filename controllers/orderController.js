@@ -11,21 +11,21 @@ module.exports = {
     },
 
     acceptOrder: (req, res, next) => {
-        Order.findOneAndUpdate ({id: req.body._id}, {status: "accepted"}, {}, (error, response) => {
+        Order.findOneAndUpdate ({_id: req.body._id}, {status: "accepted"}, {}, (error, response) => {
             if (error) console.log (error);
             res.send (response);
         })
     },
 
     completeOrder: (req, res, next) => {
-        Order.findOneAndUpdate ({id: req.body._id}, {status: "completed"}, {}, (error, response) => {
+        Order.findOneAndUpdate ({_id: req.body._id}, {status: "completed"}, {}, (error, response) => {
             if (error) console.log (error);
             res.send (response);
         })
     },
 
     getActiveOrders: (req, res, next) => {
-        Order.find ({status: "accepted"}, (error, orders) => {
+        Order.find ({}, (error, orders) => {
             if (error) console.log (error);
             res.send (orders);
         });
