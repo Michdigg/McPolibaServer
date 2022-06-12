@@ -5,7 +5,8 @@ const
     mongoose = require('mongoose'),
     productController = require('./controllers/productController'),
     userController = require('./controllers/userController'),
-    orderController = require('./controllers/orderController')
+    orderController = require('./controllers/orderController'),
+    cookieParser = require('cookie-parser')
 ;
 const expressSession = require("express-session");
 const passport = require("passport");
@@ -17,21 +18,37 @@ mongoose.connect(mongodbUrl, {useNewUrlParser: true});
 const db = mongoose.connection;
 db.once("open", () => console.log("Connessione al database riuscita"));
 
+require("./strategies/JwtStrategy")
+require("./strategies/LocalStrategy")
+require("./authenticate")
+
 const app = express();
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+app.use(cookieParser("jhdshhds884hfhhs-ew6dhjd"))
 
 app.use(flash());
 app.use(expressSession({ secret: 'super secret' , resave: true, saveUninitialized: true}));
 app.use(passport.initialize());
-app.use(passport.session());
 
 const cors=require("cors");
-const corsOptions ={
-    origin:'*',
-    credentials:true,
-    optionSuccessStatus:200,
+const {verifyUser} = require ("./authenticate");
+
+const whitelist = 'http://localhost:3000'
+    ? 'http://localhost:3000'.split(",")
+    : []
+
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (!origin || whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error("Not allowed by CORS"))
+        }
+    },
+    httpOnly: true,
+    credentials: true,
 }
 
 app.use(cors(corsOptions))
@@ -50,9 +67,10 @@ app.put("/updateProduct", productController.updateProduct)
 
 //User
 app.post("/signUp", userController.create)
-app.post("/login", userController.authenticate)
-app.get("/logout", userController.logout)
-app.get("/isLogged", userController.isLogged)
+app.post("/login", passport.authenticate("local") ,userController.authenticate)
+app.post("/refreshToken", userController.refreshToken)
+app.get("/logout",verifyUser, userController.logout)
+app.get("/me", verifyUser, userController.me)
 
 //Order
 app.post("/createOrder", orderController.createOrder)
