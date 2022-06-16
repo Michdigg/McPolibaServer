@@ -77,5 +77,6 @@ app.post("/createOrder", orderController.createOrder)
 app.post("/acceptOrder", orderController.acceptOrder)
 app.post("/completeOrder", orderController.completeOrder)
 app.get("/orders", orderController.getActiveOrders)
+app.get("/orders/:email", orderController.getMyOrders)
 
 app.listen(port, () => console.log("Applicazione in ascolto"));

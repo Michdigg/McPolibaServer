@@ -5,10 +5,11 @@ const orderSchema = mongoose.Schema({
         _id : String,
         name: String,
         price: Number,
-        amount: Number,
+        amount: Number
     }],
     amount: Number,
-    status: String // pending || accepted || completed
+    status: String, // pending || accepted || completed
+    email: String
 });
 
 orderSchema.pre("save", function(next) {

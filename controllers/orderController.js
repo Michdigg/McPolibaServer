@@ -29,5 +29,12 @@ module.exports = {
             if (error) console.log (error);
             res.send (orders);
         });
+    },
+
+    getMyOrders: (req, res, next) => {
+        Order.find ({email: req.params.email}, (error, orders) => {
+            if (error) console.log (error);
+            res.send (orders);
+        });
     }
 }
