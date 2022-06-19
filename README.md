@@ -7,6 +7,14 @@ Tutti i casi d'uso sono stati implementati e in particolare:
 - Sono state gestite le sessioni attraverso passport secondo i JWT. 
 - Nonostante sia stata utilizzata MUI come libreria grafica, gran parte del CSS è stato realizzato a mano.
 
+# Autenticazione
+
+Per entrare nell'applicazione si può:
+- Creare un nuovo utente (che verrà registrato come "customer")
+- Accedere attraverso un utente già registrato
+- Se si vuole accedere come "chef" per poter accettare/completare gli ordini è stata preimpostata un utenza => email: chef@mcPoliba.com, password: chef123
+- Nuovi utenti di tipo "chef" potranno essere aggiunti dal backend tramite le API successivamente specificate.
+
 ## Frontend
 
 Per il frontend è stato utilizzato React.
